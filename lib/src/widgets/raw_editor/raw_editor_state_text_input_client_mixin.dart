@@ -338,6 +338,14 @@ mixin RawEditorStateTextInputClientMixin on EditorState
     _lastKnownRemoteTextEditingValue = null;
   }
 
+  @override
+  bool onFocusReceived() {
+    // Required by Flutter SDK 3.44+ (TextInputClient gained this member).
+    // This editor manages its own focus through the FocusNode, so it never
+    // acquires focus from the platform side here.
+    return false;
+  }
+
   void _updateSizeAndTransform() {
     if (hasConnection) {
       // Asking for renderEditor.size here can cause errors if layout hasn't
